@@ -41,6 +41,27 @@ function nowWeather(searchedCity){
         url: currentCity,
         method: "GET"
       }).then(function(response) {
-        console.log("searched city resonse: ", response);
+        console.log("searched city response: ", response);
+        console.log("searched city name: ", response.name);
+        console.log("searched city icon: ", response.weather[0].icon);
+        console.log("searched city temp: ", response.main.temp);
+        console.log("searched city humidity: ", response.main.humidity);
+        console.log("searched city wind: ", response.wind.speed);
+        var latitude = response.coord.lat;
+        var longitude = response.coord.lon;
+        currentUV(latitude, longitude);
+
       });
 }
+
+function currentUV(latitude, longitude){
+    const cityUV = "http://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey;
+
+    $.ajax({
+        url: cityUV,
+        method: "GET"
+      }).then(function(response) {
+        console.log("uv:",response)
+    });
+}
+
