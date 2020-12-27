@@ -19,3 +19,15 @@
 
 // save city search as button to panel (local storage)
 // when the page is opened, its opened to the last searched city
+
+
+const searchBtn = $('.searchBtn');
+const searchBox = $('.searchFld');
+
+
+searchBtn.click(handleSearch);
+
+function handleSearch() {
+    const searchedCity = $(searchBox).val();
+    console.log(searchedCity)
+}
