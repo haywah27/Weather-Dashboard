@@ -20,6 +20,7 @@
 // save city search as button to panel (local storage)
 // when the page is opened, its opened to the last searched city
 
+const apiKey = "9d892215aa42af9ae78d3f8d9778538a"
 
 const searchBtn = $('.searchBtn');
 const searchBox = $('.searchFld');
@@ -29,5 +30,17 @@ searchBtn.click(handleSearch);
 
 function handleSearch() {
     const searchedCity = $(searchBox).val();
-    console.log(searchedCity)
+    console.log("this is the city entered:", searchedCity);
+    nowWeather(searchedCity);
+
+}
+
+function nowWeather(searchedCity){
+    const currentCity = "http://api.openweathermap.org/data/2.5/weather?q=" + searchedCity + "&appid=" + apiKey;
+    $.ajax({
+        url: currentCity,
+        method: "GET"
+      }).then(function(response) {
+        console.log("searched city resonse: ", response);
+      });
 }
