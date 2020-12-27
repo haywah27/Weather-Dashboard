@@ -32,21 +32,22 @@ function handleSearch() {
     const searchedCity = $(searchBox).val();
     console.log("this is the city entered:", searchedCity);
     nowWeather(searchedCity);
+    forcast(searchedCity);
 
 }
 
 function nowWeather(searchedCity){
-    const currentCity = "http://api.openweathermap.org/data/2.5/weather?q=" + searchedCity + "&appid=" + apiKey;
+    const currentCity = "http://api.openweathermap.org/data/2.5/weather?q=" + searchedCity + "&units=imperial&appid=" + apiKey;
     $.ajax({
         url: currentCity,
         method: "GET"
       }).then(function(response) {
         console.log("searched city response: ", response);
-        console.log("searched city name: ", response.name);
-        console.log("searched city icon: ", response.weather[0].icon);
-        console.log("searched city temp: ", response.main.temp);
-        console.log("searched city humidity: ", response.main.humidity);
-        console.log("searched city wind: ", response.wind.speed);
+        console.log("name: ", response.name);
+        console.log("icon: ", response.weather[0].icon);
+        console.log("temp: ", response.main.temp);
+        console.log("humidity: ", response.main.humidity);
+        console.log("wind: ", response.wind.speed);
         var latitude = response.coord.lat;
         var longitude = response.coord.lon;
         currentUV(latitude, longitude);
@@ -55,13 +56,37 @@ function nowWeather(searchedCity){
 }
 
 function currentUV(latitude, longitude){
-    const cityUV = "http://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey;
+    const cityUV = "http://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&units=imperial&appid=" + apiKey;
 
     $.ajax({
         url: cityUV,
         method: "GET"
       }).then(function(response) {
         console.log("uv:",response)
+
+    });
+}
+
+function forcast(searchedCity){
+    
+    const futureForcast = "http://api.openweathermap.org/data/2.5/forecast?q=" + searchedCity + "&units=imperial&appid=" + apiKey;
+
+    $.ajax({
+        url: futureForcast,
+        method: "GET"
+      }).then(function(response) {
+          var listLength = response.list
+          for(var i = 0; i < listLength.length; i+= 8){
+              console.log("forloop resonse:", listLength[i]);
+              console.log("date:", listLength[i].dt_txt);
+              console.log("icon:", listLength[i].weather[0].icon);
+              console.log("temp:", listLength[i].main.temp);
+              console.log("humidity:", listLength[i].main.humidity);
+
+          }
+          console.log("future:",response)
+        
+
     });
 }
 
