@@ -1,3 +1,16 @@
 .blankSpace {
-    background-color: grey;
+    background-color: lightgrey;
+}
+
+.blankSpace2 { 
+    background-color: lightblue;
+}
+
+.cityHeader {
+    margin: auto;
+    display: inline-block;
+}
+.cityIcon, .userSearchCity{
+    vertical-align: middle;
+    
 }

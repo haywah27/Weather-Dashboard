@@ -22,8 +22,13 @@
 
 const apiKey = "9d892215aa42af9ae78d3f8d9778538a"
 
-const searchBtn = $('.searchBtn');
-const searchBox = $('.searchFld');
+const searchBtn = $(".searchBtn");
+const searchBox = $(".searchFld");
+
+const userSearchTitle = $(".userSearchCity");
+const userSearchIcon = $(".cityIcon");
+const userSearchDetails = $(".userSearchInfo");
+var currentDate = (moment().format("M/D/YY"));
 
 
 searchBtn.click(handleSearch);
@@ -37,11 +42,23 @@ function handleSearch() {
 }
 
 function nowWeather(searchedCity){
+    userSearchTitle.empty();
+    userSearchIcon.empty();
+    userSearchDetails.empty();
     const currentCity = "http://api.openweathermap.org/data/2.5/weather?q=" + searchedCity + "&units=imperial&appid=" + apiKey;
     $.ajax({
         url: currentCity,
         method: "GET"
       }).then(function(response) {
+          
+          var cityName = response.name;
+          var cityIconCode = response.weather[0].icon;
+          var iconURL = "http://openweathermap.org/img/w/" + cityIconCode + ".png";
+          var cityTemp = response.main.temp;
+          var cityHumidity = response.main.humidity;
+          var cityWind = response.wind.speed;
+        $(userSearchTitle).text( cityName + " " + "(" + currentDate + ")");
+        $(userSearchIcon).attr("src", iconURL);
         console.log("searched city response: ", response);
         console.log("name: ", response.name);
         console.log("icon: ", response.weather[0].icon);
