@@ -1,16 +1,52 @@
-.blankSpace {
+.leftColumn {
     background-color: lightgrey;
 }
 
-.blankSpace2 { 
+.rightColumn { 
     background-color: lightblue;
 }
 
-.cityHeader {
-    margin: auto;
-    display: inline-block;
-}
 .cityIcon, .userSearchCity{
     vertical-align: middle;
     
 }
+
+.box{
+   width: 60px;
+   height: 40px!important;
+   padding: 8px!important;
+   display: inline-block;
+   
+}
+
+
+.lowUV{
+    background-color: #00cc66!important;
+    color: black!important;
+ }
+
+ .medUV{
+    background-color: #ffdb4d!important;
+    color: black!important;
+ }
+
+ .highUV{
+    background-color: #ff8000!important;
+    color: black!important;
+ }
+
+.veryHighUV{
+   background-color: fireBrick!important;
+   color: white!important;
+}
+.extremeUV{
+    background-color: #993366!important;
+    color: white!important;
+
+}
+
+
+.uvText{
+    vertical-align: middle;
+}
+

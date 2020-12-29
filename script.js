@@ -25,10 +25,14 @@ const apiKey = "9d892215aa42af9ae78d3f8d9778538a"
 const searchBtn = $(".searchBtn");
 const searchBox = $(".searchFld");
 
+var currentDate = (moment().format("M/D/YY"));
 const userSearchTitle = $(".userSearchCity");
 const userSearchIcon = $(".cityIcon");
 const userSearchDetails = $(".userSearchInfo");
-var currentDate = (moment().format("M/D/YY"));
+const uvBox = $(".uv-content");
+const uvText = $(".uvText");
+
+
 
 
 searchBtn.click(handleSearch);
@@ -54,11 +58,14 @@ function nowWeather(searchedCity){
           var cityName = response.name;
           var cityIconCode = response.weather[0].icon;
           var iconURL = "http://openweathermap.org/img/w/" + cityIconCode + ".png";
-          var cityTemp = response.main.temp;
-          var cityHumidity = response.main.humidity;
-          var cityWind = response.wind.speed;
+          var cityTemp = $("<p>").text("Temperature: " + Math.round(response.main.temp) + " °F");
+          var cityHumidity =  $("<p>").text("Humidity: " + response.main.humidity + "%");
+          var cityWind =  $("<p>").text("Wind Speed: " + response.wind.speed + " mph");
+          
+
         $(userSearchTitle).text( cityName + " " + "(" + currentDate + ")");
         $(userSearchIcon).attr("src", iconURL);
+        $(userSearchDetails).append(cityTemp, cityHumidity, cityWind);
         console.log("searched city response: ", response);
         console.log("name: ", response.name);
         console.log("icon: ", response.weather[0].icon);
@@ -79,8 +86,23 @@ function currentUV(latitude, longitude){
         url: cityUV,
         method: "GET"
       }).then(function(response) {
-        console.log("uv:",response)
-
+          var uvIndex = response.value;
+          var cityUVIndex = ("UV Index: ");
+            console.log("cityUV: ", cityUVIndex)
+          $(uvBox).text(cityUVIndex)  
+          $(uvText).text(uvIndex)
+        console.log("uv:",response.value)
+        if (uvIndex <= 2){
+            $(".box").addClass("lowUV");
+        } else if (uvIndex <= 5 && uvIndex >=3){
+            $(".box").addClass("medUV");
+        } else if (uvIndex <=7 && uvIndex >=6){
+            $(".box").addClass("highUV");
+        } else if (uvIndex <= 10 && uvIndex >= 8){
+            $(".box").addClass("veryHighUV");
+        } else {
+            $(".box").addClass("extremeUV");
+        }
     });
 }
 
