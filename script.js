@@ -29,6 +29,7 @@ var currentDate = (moment().format("M/D/YY"));
 const userSearchTitle = $(".userSearchCity");
 const userSearchIcon = $(".cityIcon");
 const userSearchDetails = $(".userSearchInfo");
+const buttonDump = $(".buttonDump");
 
 
 searchBtn.click(handleSearch);
@@ -36,10 +37,46 @@ searchBtn.click(handleSearch);
 function handleSearch() {
     const searchedCity = $(searchBox).val();
     console.log("this is the city entered:", searchedCity);
+    saveCity(searchedCity);
     nowWeather(searchedCity);
     forcast(searchedCity);
-
+    addClearBtn();
 }
+
+function addClearBtn(){
+    // if list is 1 or above, run funciton
+    $(".addBtn").append('<button class="button is-danger is-light buttonClear">Clear List</button>');
+}
+var buttonList = [];
+var cityArr = [];
+function saveCity(searchedCity){
+    
+    var capitalizeButton = searchedCity.charAt(0).toUpperCase() + searchedCity.slice(1);
+    
+    var newButton = $("<button class='button is-fullwidth is-rounded'>").text(capitalizeButton);
+    
+    buttonList.push(newButton);
+    cityArr.push(searchedCity);
+
+    localStorage.setItem("buttonList", JSON.stringify(cityArr));
+    
+
+
+    
+    $(".buttonClear").click(function() {
+        console.log(this);
+        localStorage.clear();
+        document.location.reload();
+     })
+
+
+    // localStorage.setItem("userButtons", buttonList);
+    
+
+    $(buttonDump).append(buttonList);
+}
+
+
 
 function nowWeather(searchedCity){
     userSearchTitle.empty();
@@ -111,7 +148,6 @@ function forcast(searchedCity){
       }).then(function(response) {
           var listLength = response.list;
           var forcastContain = $(".forcastContainer");
-        //   moment().add(listLength[i], 'days').format("M/D/YY")
         
        
         var iconArr = [];
