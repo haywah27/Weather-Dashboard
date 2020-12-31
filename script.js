@@ -30,6 +30,7 @@ const userSearchTitle = $(".userSearchCity");
 const userSearchIcon = $(".cityIcon");
 const userSearchDetails = $(".userSearchInfo");
 const buttonDump = $(".buttonDump");
+const forcastContain = $(".forcastContainer");
 
 
 searchBtn.click(handleSearch);
@@ -47,30 +48,36 @@ function addClearBtn(){
     // if list is 1 or above, run funciton
     $(".addBtn").append('<button class="button is-danger is-light buttonClear">Clear List</button>');
 }
+
 var buttonList = [];
 var cityArr = [];
 function saveCity(searchedCity){
     
     var capitalizeButton = searchedCity.charAt(0).toUpperCase() + searchedCity.slice(1);
     
-    var newButton = $("<button class='button is-fullwidth is-rounded'>").text(capitalizeButton);
+    var newButton = $("<button class='button is-fullwidth is-rounded cityButton'>").text(capitalizeButton);
     
     buttonList.push(newButton);
     cityArr.push(searchedCity);
 
     localStorage.setItem("buttonList", JSON.stringify(cityArr));
-    
+    var retrievedData = localStorage.getItem("buttonList");
+    var movies2 = JSON.parse(retrievedData);
 
+    $(newButton).click(function() {
+        console.log("clicked",this);
+        var inputSave = $(this).text();
+        nowWeather(inputSave);
+        forcast(inputSave);
+        console.log("value", inputSave);
+        
+     })
 
-    
     $(".buttonClear").click(function() {
-        console.log(this);
+        console.log( this);
         localStorage.clear();
         document.location.reload();
      })
-
-
-    // localStorage.setItem("userButtons", buttonList);
     
 
     $(buttonDump).append(buttonList);
@@ -82,6 +89,7 @@ function nowWeather(searchedCity){
     userSearchTitle.empty();
     userSearchIcon.empty();
     userSearchDetails.empty();
+    forcastContain.empty();
    
     
     const currentCity = "http://api.openweathermap.org/data/2.5/weather?q=" + searchedCity + "&units=imperial&appid=" + apiKey;
@@ -140,6 +148,8 @@ function currentUV(latitude, longitude){
 
 function forcast(searchedCity){
     
+    
+    
     const futureForcast = "http://api.openweathermap.org/data/2.5/forecast?q=" + searchedCity + "&units=imperial&appid=" + apiKey;
 
     $.ajax({
@@ -147,7 +157,7 @@ function forcast(searchedCity){
         method: "GET"
       }).then(function(response) {
           var listLength = response.list;
-          var forcastContain = $(".forcastContainer");
+          
         
        
         var iconArr = [];
