@@ -1,9 +1,13 @@
 .leftColumn {
-    background-color: lightgrey;
+    background-color: lightgrey!important;
+    padding: 20px;
+    
 }
 
 .rightColumn { 
-    background-color: lightblue;
+    background-color: lightblue!important;
+    padding: 20px;
+    margin-bottom: 1rem;
 }
 
 .cityIcon, .userSearchCity{
@@ -11,10 +15,12 @@
     
 }
 
-.box{
+.UVbox{
    width: 60px;
    height: 40px!important;
    padding: 8px!important;
+   margin-right: 20px!important;
+   text-align: center;
    display: inline-block;
    
 }
@@ -48,5 +54,10 @@
 
 .uvText{
     vertical-align: middle;
+    text-align: left;
+}
+
+.cardWidth{
+    width: 50rem;
 }
 

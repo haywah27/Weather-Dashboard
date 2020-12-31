@@ -21,37 +21,80 @@
 
     <!-- Search Bar Element-->
     <div class="container">
-        <div class="columns ">
+        <div class="columns is-2">
             
-            <div class="column is-one-third leftColumn">
-                <label class="label">Search for a City:</label>
-                <div class="field has-addons">
-                    <div class="control">
-                        <input class="input searchFld" type="text" placeholder="City Name">
-                    </div>
-                    <div class="control">
-                        <a class="button is-primary searchBtn">
-                            <i class="fas fa-search"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="column rightColumn">
-                <div class="cityHeader">
-                    <span class="userSearchCity title is-3"></span>
-                    <img class="cityIcon">
-                </div>
-                <div class="userSearchInfo"></div>
-                <div class="container">
-                    <span>UV Index: </span>
-                    <div class="box">
-                        
-                        <div class="uv-content has-text-centered uvText"></div>
-                        
+            <div class="column is-4">
+                <div class="card leftColumn">
+                    <label class="label">Search for a City:</label>
+                    <div class="field has-addons">
+                        <div class="control">
+                            <input class="input searchFld" type="text" placeholder="City Name">
+                        </div>
+                        <div class="control">
+                            <a class="button is-primary searchBtn">
+                                <i class="fas fa-search"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
+            
+            <div class="column">
+                <div class="card rightColumn">
+                    <div class="cityHeader">
+                        <span class="userSearchCity title is-3"></span>
+                        <img class="cityIcon">
+                    </div>
+                    <div class="userSearchInfo"></div>
+                    <div class="uvContainer"></div>
+                </div>
+                <!-- forcast container -->
+                <div class="columns forcastContainer">
+                    
+                </div>
+                        
+            </div>
+        </div>
     </div>
+       
+    
+    
+    
+
     <script src="script.js"></script>
 </body>
 </html>
+
+
+
+  <!-- <div class="tile is-parent">
+                    <article class="tile is-child box day1">
+                        <p class="title">One</p>
+                        <p class="subtitle">Subtitle</p>
+                    </article>
+                    </div>
+
+                    <div class="tile is-parent">
+                    <article class="tile is-child box2">
+                        <p class="title">Two</p>
+                        <p class="subtitle">Subtitle</p>
+                    </article>
+                    </div>
+                    <div class="tile is-parent">
+                    <article class="tile is-child box day3">
+                        <p class="title">Three</p>
+                        <p class="subtitle">Subtitle</p>
+                    </article>
+                    </div>
+                    <div class="tile is-parent">
+                    <article class="tile is-child box day4">
+                        <p class="title">Four</p>
+                        <p class="subtitle">Subtitle</p>
+                    </article>
+                    </div>
+                    <div class="tile is-parent">
+                        <article class="tile is-child box day5">
+                        <p class="title">Five</p>
+                        <p class="subtitle">Subtitle</p>
+                        </article>
+                    </div>

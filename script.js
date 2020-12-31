@@ -29,8 +29,9 @@ var currentDate = (moment().format("M/D/YY"));
 const userSearchTitle = $(".userSearchCity");
 const userSearchIcon = $(".cityIcon");
 const userSearchDetails = $(".userSearchInfo");
-const uvBox = $(".uv-content");
-const uvText = $(".uvText");
+
+
+
 
 
 
@@ -49,6 +50,8 @@ function nowWeather(searchedCity){
     userSearchTitle.empty();
     userSearchIcon.empty();
     userSearchDetails.empty();
+   
+    
     const currentCity = "http://api.openweathermap.org/data/2.5/weather?q=" + searchedCity + "&units=imperial&appid=" + apiKey;
     $.ajax({
         url: currentCity,
@@ -61,17 +64,12 @@ function nowWeather(searchedCity){
           var cityTemp = $("<p>").text("Temperature: " + Math.round(response.main.temp) + " °F");
           var cityHumidity =  $("<p>").text("Humidity: " + response.main.humidity + "%");
           var cityWind =  $("<p>").text("Wind Speed: " + response.wind.speed + " mph");
-          
+          var cityUVIndex = $("<p>").text("UV Index: ");
 
         $(userSearchTitle).text( cityName + " " + "(" + currentDate + ")");
         $(userSearchIcon).attr("src", iconURL);
-        $(userSearchDetails).append(cityTemp, cityHumidity, cityWind);
-        console.log("searched city response: ", response);
-        console.log("name: ", response.name);
-        console.log("icon: ", response.weather[0].icon);
-        console.log("temp: ", response.main.temp);
-        console.log("humidity: ", response.main.humidity);
-        console.log("wind: ", response.wind.speed);
+        $(userSearchDetails).append(cityTemp, cityHumidity, cityWind, cityUVIndex);
+        
         var latitude = response.coord.lat;
         var longitude = response.coord.lon;
         currentUV(latitude, longitude);
@@ -80,6 +78,11 @@ function nowWeather(searchedCity){
 }
 
 function currentUV(latitude, longitude){
+    const userSearchUV = $(".uvContainer ");
+    userSearchUV.html($("<div class='box UVbox'></div>"));
+    
+    $(".UVbox").html($('<div class="has-text-centered uvText"></div>'));
+    
     const cityUV = "http://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&units=imperial&appid=" + apiKey;
 
     $.ajax({
@@ -87,21 +90,18 @@ function currentUV(latitude, longitude){
         method: "GET"
       }).then(function(response) {
           var uvIndex = response.value;
-          var cityUVIndex = ("UV Index: ");
-            console.log("cityUV: ", cityUVIndex)
-          $(uvBox).text(cityUVIndex)  
-          $(uvText).text(uvIndex)
-        console.log("uv:",response.value)
-        if (uvIndex <= 2){
-            $(".box").addClass("lowUV");
+          $(".UVbox").text(uvIndex)
+        console.log("uv:",uvIndex)
+        if (uvIndex < 3){
+            $(".UVbox").addClass("lowUV");
         } else if (uvIndex <= 5 && uvIndex >=3){
-            $(".box").addClass("medUV");
+            $(".UVbox").addClass("medUV");
         } else if (uvIndex <=7 && uvIndex >=6){
-            $(".box").addClass("highUV");
+            $(".UVbox").addClass("highUV");
         } else if (uvIndex <= 10 && uvIndex >= 8){
-            $(".box").addClass("veryHighUV");
+            $(".UVbox").addClass("veryHighUV");
         } else {
-            $(".box").addClass("extremeUV");
+            $(".UVbox").addClass("extremeUV");
         }
     });
 }
@@ -114,8 +114,26 @@ function forcast(searchedCity){
         url: futureForcast,
         method: "GET"
       }).then(function(response) {
-          var listLength = response.list
+          var listLength = response.list;
+          var forcastContain = $(".forcastContainer");
+          
           for(var i = 0; i < listLength.length; i+= 8){
+            var forcastDate = $("<p>").text(listLength[i].dt_txt);
+            var forcastIconCode = listLength[i].weather[0].icon;
+            var forcastIconURL = "http://openweathermap.org/img/w/" + forcastIconCode + ".png";
+            var forestIcomDiv = $("<img>").attr("src", forcastIconURL);
+            var forcastTemp = $("<p>").text("Temp: " + Math.round(listLength[i].main.temp) + " °F");
+            var forcastHum = $("<p>").text("Humidity: " + listLength[i].main.humidity);
+
+            var forcastColumn = $("<div>").addClass("column forcastColumn");
+            var forcastCard = $("<div>").addClass("card rightColumn");
+
+            $(forcastCard).append(forcastDate, forestIcomDiv, forcastTemp, forcastHum);
+            $(forcastColumn).append(forcastCard);
+            $(forcastContain).append(forcastColumn);
+
+
+            
               console.log("forloop resonse:", listLength[i]);
               console.log("date:", listLength[i].dt_txt);
               console.log("icon:", listLength[i].weather[0].icon);
