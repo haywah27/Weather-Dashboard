@@ -31,11 +31,6 @@ const userSearchIcon = $(".cityIcon");
 const userSearchDetails = $(".userSearchInfo");
 
 
-
-
-
-
-
 searchBtn.click(handleSearch);
 
 function handleSearch() {
@@ -116,31 +111,74 @@ function forcast(searchedCity){
       }).then(function(response) {
           var listLength = response.list;
           var forcastContain = $(".forcastContainer");
-          
-          for(var i = 0; i < listLength.length; i+= 8){
-            var forcastDate = $("<p>").text(listLength[i].dt_txt);
-            var forcastIconCode = listLength[i].weather[0].icon;
-            var forcastIconURL = "http://openweathermap.org/img/w/" + forcastIconCode + ".png";
-            var forestIcomDiv = $("<img>").attr("src", forcastIconURL);
-            var forcastTemp = $("<p>").text("Temp: " + Math.round(listLength[i].main.temp) + " °F");
-            var forcastHum = $("<p>").text("Humidity: " + listLength[i].main.humidity);
+        //   moment().add(listLength[i], 'days').format("M/D/YY")
+        
+       
+        var iconArr = [];
+        var tempArr = [];
+        var humidArr = [];
+      
 
+        for(var i = 0; i < listLength.length; i+= 8){
+            console.log("forloop resonse:", listLength[i]);
+            var futureIconID = listLength[i].weather[0].icon;
+            var forcastIconURL = "http://openweathermap.org/img/w/" + futureIconID + ".png";
+            var forestIcomDiv = $("<img>").attr("src", forcastIconURL);
+            var futureTemp = $("<p>").text("Temp: " + Math.round(listLength[i].main.temp) + " °F");
+            var futureHum = $("<p>").text("Humidity: " + listLength[i].main.humidity + "%");
+
+            
+            iconArr.push(forestIcomDiv);
+            tempArr.push(futureTemp);
+            humidArr.push(futureHum);
+            console.log("temparr first: ", tempArr)
+
+
+        }
+
+        for (var i=0 ; i < 5 ; i++){
+            
+            var date = (moment().add([i+1] , 'days').format("MM/DD/YY"));
+            var forcastDate = $("<p class= boldFont>").text(date);
+
+            
             var forcastColumn = $("<div>").addClass("column forcastColumn");
             var forcastCard = $("<div>").addClass("card rightColumn");
-
-            $(forcastCard).append(forcastDate, forestIcomDiv, forcastTemp, forcastHum);
+            $(forcastCard).append(forcastDate, iconArr[i], tempArr[i], humidArr[i]);
             $(forcastColumn).append(forcastCard);
             $(forcastContain).append(forcastColumn);
+        }
+        // console.log("date arr", dateArr)
+
+
+
+
+        //   for(var i = 0; i < listLength.length; i+= 8){
+            
+
+        //     var forcastDate = $("<p class= boldFont>").text(funcitonDate[i++]);
+        //     var forcastIconCode = listLength[i].weather[0].icon;
+        //     var forcastIconURL = "http://openweathermap.org/img/w/" + forcastIconCode + ".png";
+        //     var forestIcomDiv = $("<img>").attr("src", forcastIconURL);
+        //     var forcastTemp = $("<p>").text("Temp: " + Math.round(listLength[i].main.temp) + " °F");
+        //     var forcastHum = $("<p>").text("Humidity: " + listLength[i].main.humidity);
+
+        //     var forcastColumn = $("<div>").addClass("column forcastColumn");
+        //     var forcastCard = $("<div>").addClass("card rightColumn");
+
+        //     $(forcastCard).append(forcastDate, forestIcomDiv, forcastTemp, forcastHum);
+        //     $(forcastColumn).append(forcastCard);
+        //     $(forcastContain).append(forcastColumn);
 
 
             
-              console.log("forloop resonse:", listLength[i]);
-              console.log("date:", listLength[i].dt_txt);
-              console.log("icon:", listLength[i].weather[0].icon);
-              console.log("temp:", listLength[i].main.temp);
-              console.log("humidity:", listLength[i].main.humidity);
+        //       console.log("forloop resonse:", listLength[i]);
+        //       console.log("date:", listLength[i].dt_txt);
+        //       console.log("icon:", listLength[i].weather[0].icon);
+        //       console.log("temp:", listLength[i].main.temp);
+        //       console.log("humidity:", listLength[i].main.humidity);
 
-          }
+        //   }
           console.log("future:",response)
         
 

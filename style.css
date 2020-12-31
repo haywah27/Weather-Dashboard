@@ -61,3 +61,8 @@
     width: 50rem;
 }
 
+.boldFont{
+    font-size: 25px;
+    font-weight: bold;
+}
+
