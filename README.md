@@ -29,6 +29,7 @@ https://haywah27.github.io/Weather-Dashboard/
 * Avoiding posting an invalid city to local storage or a button 
 * Having a constant city posted even if local storage is empty
 * Capitalizing multiple word city name
+* Removing constant city
 
 ## Deployed Website 
 <img src="./Assets/deployed-web.png" alt="deployed-website">
