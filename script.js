@@ -12,6 +12,7 @@ const forcastContain = $(".forcastContainer");
 const userSearchUV = $(".uvContainer ");
 const cityButton = $(".cityButton");
 
+
 var buttonList = [];
 
 $(".searchedCityColumn").hide();
@@ -34,11 +35,11 @@ function storageEmpty(){
 function lastSearchDisplay(){
     var cityHistory = JSON.parse(window.localStorage.getItem("city-name"));
     var lastHistorySearch = cityHistory[cityHistory.length -1];
+
     $(".searchedCityColumn").show();
-    postCityButton(lastHistorySearch);
+    // postCityButton(lastHistorySearch);
     nowWeather(lastHistorySearch);
     forcast(lastHistorySearch);
-    console.log("lastArrayItem:", lastHistorySearch);
 }
 
 // display buttons based on local storage array
@@ -49,11 +50,9 @@ function localPost(){
         var newButton = $("<button class='button is-fullwidth is-rounded cityButton'>").text(cityHistory[i]);
         $(buttonDump).append(newButton);
         $(newButton).click(function() {
-            console.log("clicked",this);
             var inputSave = $(this).text();
             nowWeather(inputSave);
             forcast(inputSave);
-            console.log("value", inputSave);
          });
     }
 }
@@ -61,8 +60,7 @@ function localPost(){
 // on search button click, initiate other functions
 searchBtn.click(function(){
     const searchedCity = $(searchBox).val();
-    console.log("this is the city entered:", searchedCity);
-    postCityButton(searchedCity);
+    // postCityButton(searchedCity);
     nowWeather(searchedCity);
     forcast(searchedCity);
 });
@@ -95,18 +93,19 @@ function postCityButton(searchedCity){
 // clear local storage/ button list on clear button click
 function clearList(){
     $(".buttonClear").click(function() {
-        console.log( this);
         localStorage.clear();
         document.location.reload();
      });
 }
+
+
 
 // display current weather for city searched
 function nowWeather(searchedCity){
     $(".searchedCityColumn").show();
     // clear previous data
     userSearchTitle.empty();
-    userSearchIcon.empty();
+    userSearchIcon.hide();
     userSearchDetails.empty();
     userSearchUV.empty();
     $(".forcast-title").empty();
@@ -117,6 +116,7 @@ function nowWeather(searchedCity){
         url: currentCity,
         method: "GET"
       }).then(function(response) {
+        postCityButton(searchedCity);
           var cityName = response.name;
           var cityIconCode = response.weather[0].icon;
           var iconURL = "http://openweathermap.org/img/w/" + cityIconCode + ".png";
@@ -126,6 +126,7 @@ function nowWeather(searchedCity){
           var cityUVIndex = $("<p>").text("UV Index: ");
 
         $(userSearchTitle).text( cityName + " " + "(" + currentDate + ")");
+        userSearchIcon.show();
         $(userSearchIcon).attr("src", iconURL);
         $(userSearchDetails).append(cityTemp, cityHumidity, cityWind, cityUVIndex);
         
@@ -133,7 +134,18 @@ function nowWeather(searchedCity){
         var latitude = response.coord.lat;
         var longitude = response.coord.lon;
         currentUV(latitude, longitude);
-      });
+      })
+      .catch(function(err){
+            lastSearchDisplay();
+            $(".modal").addClass("is-active");
+            
+            $(document.body).click(function() {
+                $(".modal").removeClass("is-active");
+            })
+            // alert("Please enter a valid City Name.");
+            console.log("invalid response");
+        });
+    
 }
 
 // posting UV information
