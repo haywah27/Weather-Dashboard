@@ -24,7 +24,8 @@ function storageEmpty(){
     var cityHistory = JSON.parse(window.localStorage.getItem("city-name")) || [];
 
     if(!cityHistory.length){
-        console.log("nothing in storage empty");
+        
+        nowWeather("Eugene")
     } else {
         lastSearchDisplay();
         localPost();
@@ -37,9 +38,7 @@ function lastSearchDisplay(){
     var lastHistorySearch = cityHistory[cityHistory.length -1];
 
     $(".searchedCityColumn").show();
-    // postCityButton(lastHistorySearch);
     nowWeather(lastHistorySearch);
-    forcast(lastHistorySearch);
 }
 
 // display buttons based on local storage array
@@ -60,9 +59,7 @@ function localPost(){
 // on search button click, initiate other functions
 searchBtn.click(function(){
     const searchedCity = $(searchBox).val();
-    // postCityButton(searchedCity);
     nowWeather(searchedCity);
-    forcast(searchedCity);
 });
 
 
@@ -86,7 +83,6 @@ function postCityButton(searchedCity){
     $(newButton).click(function() {
         var inputSave = $(this).text();
         nowWeather(inputSave);
-        forcast(inputSave);
     });
 }
 
@@ -97,8 +93,6 @@ function clearList(){
         document.location.reload();
      });
 }
-
-
 
 // display current weather for city searched
 function nowWeather(searchedCity){
@@ -117,6 +111,7 @@ function nowWeather(searchedCity){
         method: "GET"
       }).then(function(response) {
         postCityButton(searchedCity);
+        forcast(searchedCity);
           var cityName = response.name;
           var cityIconCode = response.weather[0].icon;
           var iconURL = "http://openweathermap.org/img/w/" + cityIconCode + ".png";
@@ -135,14 +130,13 @@ function nowWeather(searchedCity){
         var longitude = response.coord.lon;
         currentUV(latitude, longitude);
       })
+        // if invalid response, produce modal message
       .catch(function(err){
             lastSearchDisplay();
             $(".modal").addClass("is-active");
-            
             $(document.body).click(function() {
                 $(".modal").removeClass("is-active");
             })
-            // alert("Please enter a valid City Name.");
             console.log("invalid response");
         });
     
