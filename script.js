@@ -31,38 +31,67 @@ const userSearchIcon = $(".cityIcon");
 const userSearchDetails = $(".userSearchInfo");
 const buttonDump = $(".buttonDump");
 const forcastContain = $(".forcastContainer");
+const userSearchUV = $(".uvContainer ");
 
-
-searchBtn.click(handleSearch);
-
-function handleSearch() {
-    const searchedCity = $(searchBox).val();
-    console.log("this is the city entered:", searchedCity);
-    saveCity(searchedCity);
-    nowWeather(searchedCity);
-    forcast(searchedCity);
-    addClearBtn();
-}
-
-function addClearBtn(){
-    // if list is 1 or above, run funciton
-    $(".addBtn").append('<button class="button is-danger is-light buttonClear">Clear List</button>');
-}
 
 var buttonList = [];
 var cityArr = [];
-function saveCity(searchedCity){
+
+var cityButton = $(".cityButton");
+
+
+
+
+localPost()
+clearList();
+
+function localPost(){
+    var cityHistory = JSON.parse(window.localStorage.getItem("city-name")) || [];
+    console.log("this cart:",cityHistory)
+    for (var i = 0; i < cityHistory.length; i++){
+        var newButton = $("<button class='button is-fullwidth is-rounded cityButton'>").text(cityHistory[i]);
     
-    var capitalizeButton = searchedCity.charAt(0).toUpperCase() + searchedCity.slice(1);
+        $(buttonDump).append(newButton);
+        
+        $(newButton).click(function() {
+            console.log("clicked",this);
+            var inputSave = $(this).text();
+            nowWeather(inputSave);
+            forcast(inputSave);
+            console.log("value", inputSave);
+            
+         })
+       
+    }
+}
+
+
+searchBtn.click(function(){
+    const searchedCity = $(searchBox).val();
+    console.log("this is the city entered:", searchedCity);
+    postCityButton(searchedCity);
+    nowWeather(searchedCity);
+    forcast(searchedCity);
+
+});
+
+// function handleSearch() {
+//     const searchedCity = $(searchBox).val();
+//     console.log("this is the city entered:", searchedCity);
+//     postCityButton(searchedCity);
+//     nowWeather(searchedCity);
+//     forcast(searchedCity);
     
+// }
+
+
+function postCityButton(searchedCity){
+
+    var capitalizeButton = searchedCity.charAt(0).toUpperCase() + searchedCity.slice(1);    
     var newButton = $("<button class='button is-fullwidth is-rounded cityButton'>").text(capitalizeButton);
     
     buttonList.push(newButton);
     cityArr.push(searchedCity);
-
-    localStorage.setItem("buttonList", JSON.stringify(cityArr));
-    var retrievedData = localStorage.getItem("buttonList");
-    var movies2 = JSON.parse(retrievedData);
 
     $(newButton).click(function() {
         console.log("clicked",this);
@@ -73,14 +102,25 @@ function saveCity(searchedCity){
         
      })
 
+
+    
+     var cityHistory = JSON.parse(window.localStorage.getItem("city-name")) || [];
+     cityHistory.push(capitalizeButton);
+     window.localStorage.setItem("city-name", JSON.stringify(cityHistory));
+
+    $(buttonDump).append(newButton);
+
+
+
+
+}
+
+function clearList(){
     $(".buttonClear").click(function() {
         console.log( this);
         localStorage.clear();
         document.location.reload();
      })
-    
-
-    $(buttonDump).append(buttonList);
 }
 
 
@@ -118,7 +158,7 @@ function nowWeather(searchedCity){
 }
 
 function currentUV(latitude, longitude){
-    const userSearchUV = $(".uvContainer ");
+    
     userSearchUV.html($("<div class='box UVbox'></div>"));
     
     $(".UVbox").html($('<div class="has-text-centered uvText"></div>'));
@@ -147,9 +187,6 @@ function currentUV(latitude, longitude){
 }
 
 function forcast(searchedCity){
-    
-    
-    
     const futureForcast = "http://api.openweathermap.org/data/2.5/forecast?q=" + searchedCity + "&units=imperial&appid=" + apiKey;
 
     $.ajax({
@@ -194,37 +231,7 @@ function forcast(searchedCity){
             $(forcastColumn).append(forcastCard);
             $(forcastContain).append(forcastColumn);
         }
-        // console.log("date arr", dateArr)
-
-
-
-
-        //   for(var i = 0; i < listLength.length; i+= 8){
-            
-
-        //     var forcastDate = $("<p class= boldFont>").text(funcitonDate[i++]);
-        //     var forcastIconCode = listLength[i].weather[0].icon;
-        //     var forcastIconURL = "http://openweathermap.org/img/w/" + forcastIconCode + ".png";
-        //     var forestIcomDiv = $("<img>").attr("src", forcastIconURL);
-        //     var forcastTemp = $("<p>").text("Temp: " + Math.round(listLength[i].main.temp) + " °F");
-        //     var forcastHum = $("<p>").text("Humidity: " + listLength[i].main.humidity);
-
-        //     var forcastColumn = $("<div>").addClass("column forcastColumn");
-        //     var forcastCard = $("<div>").addClass("card rightColumn");
-
-        //     $(forcastCard).append(forcastDate, forestIcomDiv, forcastTemp, forcastHum);
-        //     $(forcastColumn).append(forcastCard);
-        //     $(forcastContain).append(forcastColumn);
-
-
-            
-        //       console.log("forloop resonse:", listLength[i]);
-        //       console.log("date:", listLength[i].dt_txt);
-        //       console.log("icon:", listLength[i].weather[0].icon);
-        //       console.log("temp:", listLength[i].main.temp);
-        //       console.log("humidity:", listLength[i].main.humidity);
-
-        //   }
+    
           console.log("future:",response)
         
 
