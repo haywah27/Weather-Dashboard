@@ -31,5 +31,5 @@ https://haywah27.github.io/Weather-Dashboard/
 * Capitalizing multiple word city name
 
 ## Deployed Website 
-<img src="./assets/images/Horiseon-Live-Screenshot.png" alt="deployed-website">
+<img src="./Assets/deployed-web.png" alt="deployed-website">
 
