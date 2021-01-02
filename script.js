@@ -14,9 +14,31 @@ const cityButton = $(".cityButton");
 
 var buttonList = [];
 
-localPost()
-clearList();
 $(".searchedCityColumn").hide();
+storageEmpty()
+clearList();
+
+function storageEmpty(){
+    var cityHistory = JSON.parse(window.localStorage.getItem("city-name")) || [];
+
+    if(!cityHistory.length){
+        console.log("is empty")
+    } else {
+        lastSearchDisplay();
+        localPost()
+    }
+}
+
+function lastSearchDisplay(){
+    var cityHistory = JSON.parse(window.localStorage.getItem("city-name"));
+    var lastHistorySearch = cityHistory[cityHistory.length -1];
+    $(".searchedCityColumn").show();
+    postCityButton(lastHistorySearch);
+    nowWeather(lastHistorySearch);
+    forcast(lastHistorySearch);
+    console.log("lastArrayItem:", lastHistorySearch);
+}
+
 
 function localPost(){
     var cityHistory = JSON.parse(window.localStorage.getItem("city-name")) || [];
@@ -43,28 +65,25 @@ function localPost(){
 
 
 searchBtn.click(function(){
-
     const searchedCity = $(searchBox).val();
     console.log("this is the city entered:", searchedCity);
     postCityButton(searchedCity);
     nowWeather(searchedCity);
     forcast(searchedCity);
-
 });
 
 
-var fuck = [];
+
 function postCityButton(searchedCity){
     var capitalizeButton = searchedCity.charAt(0).toUpperCase() + searchedCity.slice(1);    
 
     var newButton = $("<button class='button is-fullwidth is-rounded cityButton'>").text(capitalizeButton);
 
-    fuck.push(searchedCity);
-    console.log("fuck: ", fuck)
+
     buttonList.push(newButton);
         
     var cityHistory = JSON.parse(window.localStorage.getItem("city-name")) || [];
-    
+
     if (cityHistory.indexOf(capitalizeButton) === -1){
         cityHistory.push(capitalizeButton);
         window.localStorage.setItem("city-name", JSON.stringify(cityHistory));
@@ -76,8 +95,6 @@ function postCityButton(searchedCity){
         nowWeather(inputSave);
         forcast(inputSave);
     })
-
-
 }
 
 function clearList(){
@@ -87,7 +104,6 @@ function clearList(){
         document.location.reload();
      })
 }
-
 
 
 function nowWeather(searchedCity){
