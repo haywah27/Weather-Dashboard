@@ -117,7 +117,7 @@ function nowWeather(searchedCity){
     $(".forcast-title").empty();
     forcastContain.empty();
    
-    const currentCity = "http://api.openweathermap.org/data/2.5/weather?q=" + searchedCity + "&units=imperial&appid=" + apiKey;
+    const currentCity = "https://api.openweathermap.org/data/2.5/weather?q=" + searchedCity + "&units=imperial&appid=" + apiKey;
     $.ajax({
         url: currentCity,
         method: "GET"
@@ -126,7 +126,7 @@ function nowWeather(searchedCity){
         forcast(searchedCity);
           var cityName = response.name;
           var cityIconCode = response.weather[0].icon;
-          var iconURL = "http://openweathermap.org/img/w/" + cityIconCode + ".png";
+          var iconURL = "https://openweathermap.org/img/w/" + cityIconCode + ".png";
           var cityTemp = $("<p>").text("Temperature: " + Math.round(response.main.temp) + " °F");
           var cityHumidity =  $("<p>").text("Humidity: " + response.main.humidity + "%");
           var cityWind =  $("<p>").text("Wind Speed: " + response.wind.speed + " mph");
@@ -160,7 +160,7 @@ function currentUV(latitude, longitude){
     $(".userSearchInfo").append($("<div class='box UVbox'></div>"));
     $(".UVbox").append($('<div class="has-text-centered uvText"></div>'));
     
-    const cityUV = "http://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&units=imperial&appid=" + apiKey;
+    const cityUV = "https://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&units=imperial&appid=" + apiKey;
 
     $.ajax({
         url: cityUV,
@@ -186,7 +186,7 @@ function currentUV(latitude, longitude){
 
 // 5 day forcast
 function forcast(searchedCity){
-    const futureForcast = "http://api.openweathermap.org/data/2.5/forecast?q=" + searchedCity + "&units=imperial&appid=" + apiKey;
+    const futureForcast = "https://api.openweathermap.org/data/2.5/forecast?q=" + searchedCity + "&units=imperial&appid=" + apiKey;
 
     $.ajax({
         url: futureForcast,
@@ -204,7 +204,7 @@ function forcast(searchedCity){
         // at a secific time, chose a timeframe for each day to produce content for an icon, temp and humidity
         for(var i = 0; i < listLength.length; i+= 8){
             var futureIconID = listLength[i].weather[0].icon;
-            var forcastIconURL = "http://openweathermap.org/img/w/" + futureIconID + ".png";
+            var forcastIconURL = "https://openweathermap.org/img/w/" + futureIconID + ".png";
             var forestIcomDiv = $("<img>").attr("src", forcastIconURL);
             var futureTemp = $("<p>").text("Temp: " + Math.round(listLength[i].main.temp) + " °F");
             var futureHum = $("<p>").text("Humidity: " + listLength[i].main.humidity + "%");
