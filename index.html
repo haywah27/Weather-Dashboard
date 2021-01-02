@@ -14,7 +14,7 @@
 <body>
 
     <!-- Navbar Title -->
-    <div class="notification is-primary has-text-centered">
+    <div class="notification is-primary has-text-centered navBar">
         <h3 class="title is-3">Weather Dashboard</h3>
     </div>
     
@@ -22,7 +22,6 @@
     <!-- Search Bar Element-->
     <div class="container">
         <div class="columns is-2">
-            
             <div class="column is-4">
                 <div class="card leftColumn addBtn">
                     <label class="label">Search for a City:</label>
@@ -31,79 +30,42 @@
                             <input class="input searchFld" type="text" placeholder="City Name">
                         </div>
                         <div class="control">
-                            <a class="button is-primary searchBtn">
+                            <a class="button searchBtn">
                                 <i class="fas fa-search"></i>
                             </a>
                         </div>
                     </div>
                     
                     <div class="buttonDump"></div>
-                    <button class="button is-danger is-light buttonClear">Clear List</button>
+                    <button class="button buttonClear">Clear List</button>
                     
                     
                 </div>
             </div>
-            
+
+            <!-- Searched City -->
             <div class="column">
-                <div class="card rightColumn">
+                <div class="card rightColumn searchedCityColumn">
                     <div class="cityHeader">
                         <span class="userSearchCity title is-3"></span>
                         <img class="cityIcon">
                     </div>
                     <div class="userSearchInfo"></div>
-                    <div class="uvContainer"></div>
+                    <div class="uvContainer">
+                        <h1>bless</h1>
+                    </div>
                 </div>
-                <!-- <div class="columns is-full">
-                    <div class= "title">
-                        <h4 class = "title is-2">"5 Day Forcast: "</h4>
-                </div> -->
-                <!-- forcast container -->
-                <div class="columns forcastContainer">
+                
+                <!-- Five Day Forcast -->
+                <div class="column forcast-title">
                     
                 </div>
+                <div class="columns forcastContainer"></div>
                         
             </div>
         </div>
     </div>
-       
     
-    
-    
-
     <script src="script.js"></script>
 </body>
 </html>
-
-
-
-  <!-- <div class="tile is-parent">
-                    <article class="tile is-child box day1">
-                        <p class="title">One</p>
-                        <p class="subtitle">Subtitle</p>
-                    </article>
-                    </div>
-
-                    <div class="tile is-parent">
-                    <article class="tile is-child box2">
-                        <p class="title">Two</p>
-                        <p class="subtitle">Subtitle</p>
-                    </article>
-                    </div>
-                    <div class="tile is-parent">
-                    <article class="tile is-child box day3">
-                        <p class="title">Three</p>
-                        <p class="subtitle">Subtitle</p>
-                    </article>
-                    </div>
-                    <div class="tile is-parent">
-                    <article class="tile is-child box day4">
-                        <p class="title">Four</p>
-                        <p class="subtitle">Subtitle</p>
-                    </article>
-                    </div>
-                    <div class="tile is-parent">
-                        <article class="tile is-child box day5">
-                        <p class="title">Five</p>
-                        <p class="subtitle">Subtitle</p>
-                        </article>
-                    </div>

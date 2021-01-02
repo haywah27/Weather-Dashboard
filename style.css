@@ -1,11 +1,32 @@
+.navBar, .searchBtn {
+    background-color: #A0B19F!important;
+}
+
+.searchFld{
+    background-color: #C1CBCA!important;
+}
+
 .leftColumn {
-    background-color: lightgrey!important;
+    background-color: #EADFC9!important;
     padding: 20px;
-    
+}
+
+.cityButton{
+    background-color: #435764!important;
+    color: white!important;
+}
+
+.buttonClear{
+    margin-top: 5px;
+    margin-left: 9rem;
+    font-weight: bold;
+    background-color: #C98380!important;
+    color: #435764!important;
+    border: 2px solid!important;
 }
 
 .rightColumn { 
-    background-color: lightblue!important;
+    background-color: #C1CBCA!important;
     padding: 20px;
     margin-bottom: 1rem;
 }
@@ -24,7 +45,6 @@
    display: inline-block;
    
 }
-
 
 .lowUV{
     background-color: #00cc66!important;
@@ -45,12 +65,11 @@
    background-color: fireBrick!important;
    color: white!important;
 }
+
 .extremeUV{
     background-color: #993366!important;
     color: white!important;
-
 }
-
 
 .uvText{
     vertical-align: middle;
@@ -66,8 +85,5 @@
     font-weight: bold;
 }
 
-.buttonClear{
-    margin-top: 5px;
-    margin-left: 9rem;
-}
+
 
