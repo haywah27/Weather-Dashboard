@@ -24,8 +24,7 @@ function storageEmpty(){
     var cityHistory = JSON.parse(window.localStorage.getItem("city-name")) || [];
 
     if(!cityHistory.length){
-
-        nowWeather("Eugene")
+        // nowWeather("Eugene");
     } else {
         lastSearchDisplay();
         localPost();
@@ -116,7 +115,7 @@ function nowWeather(searchedCity){
     userSearchUV.empty();
     $(".forcast-title").empty();
     forcastContain.empty();
-   
+
     const currentCity = "https://api.openweathermap.org/data/2.5/weather?q=" + searchedCity + "&units=imperial&appid=" + apiKey;
     $.ajax({
         url: currentCity,
@@ -126,7 +125,7 @@ function nowWeather(searchedCity){
         forcast(searchedCity);
           var cityName = response.name;
           var cityIconCode = response.weather[0].icon;
-          var iconURL = "https://openweathermap.org/img/w/" + cityIconCode + ".png";
+          var iconURL = "http://openweathermap.org/img/w/" + cityIconCode + ".png";
           var cityTemp = $("<p>").text("Temperature: " + Math.round(response.main.temp) + " °F");
           var cityHumidity =  $("<p>").text("Humidity: " + response.main.humidity + "%");
           var cityWind =  $("<p>").text("Wind Speed: " + response.wind.speed + " mph");
