@@ -1,4 +1,4 @@
-const apiKey = "9d892215aa42af9ae78d3f8d9778538a"
+const apiKey = "9d892215aa42af9ae78d3f8d9778538a";
 
 const searchBtn = $(".searchBtn");
 const searchBox = $(".searchFld");
@@ -15,20 +15,22 @@ const cityButton = $(".cityButton");
 var buttonList = [];
 
 $(".searchedCityColumn").hide();
-storageEmpty()
+storageEmpty();
 clearList();
 
+// dont freak out if local storage is empty
 function storageEmpty(){
     var cityHistory = JSON.parse(window.localStorage.getItem("city-name")) || [];
 
     if(!cityHistory.length){
-        console.log("is empty")
+        console.log("nothing in storage empty");
     } else {
         lastSearchDisplay();
-        localPost()
+        localPost();
     }
 }
 
+// display last searched city
 function lastSearchDisplay(){
     var cityHistory = JSON.parse(window.localStorage.getItem("city-name"));
     var lastHistorySearch = cityHistory[cityHistory.length -1];
@@ -39,31 +41,24 @@ function lastSearchDisplay(){
     console.log("lastArrayItem:", lastHistorySearch);
 }
 
-
+// display buttons based on local storage array
 function localPost(){
     var cityHistory = JSON.parse(window.localStorage.getItem("city-name")) || [];
-    console.log("this cart:",cityHistory)
-
 
     for (var i = 0; i < cityHistory.length; i++){
- 
         var newButton = $("<button class='button is-fullwidth is-rounded cityButton'>").text(cityHistory[i]);
-    
         $(buttonDump).append(newButton);
-        
         $(newButton).click(function() {
             console.log("clicked",this);
             var inputSave = $(this).text();
             nowWeather(inputSave);
             forcast(inputSave);
             console.log("value", inputSave);
-            
-         })
-       
+         });
     }
 }
 
-
+// on search button click, initiate other functions
 searchBtn.click(function(){
     const searchedCity = $(searchBox).val();
     console.log("this is the city entered:", searchedCity);
@@ -73,41 +68,43 @@ searchBtn.click(function(){
 });
 
 
-
+// push new buttons with labels from user search
 function postCityButton(searchedCity){
     var capitalizeButton = searchedCity.charAt(0).toUpperCase() + searchedCity.slice(1);    
-
     var newButton = $("<button class='button is-fullwidth is-rounded cityButton'>").text(capitalizeButton);
-
-
     buttonList.push(newButton);
-        
+    
+    // retrieving local storage array information
     var cityHistory = JSON.parse(window.localStorage.getItem("city-name")) || [];
 
+    // if local storage has the city already, don't duplicate
     if (cityHistory.indexOf(capitalizeButton) === -1){
         cityHistory.push(capitalizeButton);
         window.localStorage.setItem("city-name", JSON.stringify(cityHistory));
         $(buttonDump).append(newButton);
     }
 
+    // run informative funcitons when city button clicked
     $(newButton).click(function() {
         var inputSave = $(this).text();
         nowWeather(inputSave);
         forcast(inputSave);
-    })
+    });
 }
 
+// clear local storage/ button list on clear button click
 function clearList(){
     $(".buttonClear").click(function() {
         console.log( this);
         localStorage.clear();
         document.location.reload();
-     })
+     });
 }
 
-
+// display current weather for city searched
 function nowWeather(searchedCity){
     $(".searchedCityColumn").show();
+    // clear previous data
     userSearchTitle.empty();
     userSearchIcon.empty();
     userSearchDetails.empty();
@@ -115,13 +112,11 @@ function nowWeather(searchedCity){
     $(".forcast-title").empty();
     forcastContain.empty();
    
-    
     const currentCity = "http://api.openweathermap.org/data/2.5/weather?q=" + searchedCity + "&units=imperial&appid=" + apiKey;
     $.ajax({
         url: currentCity,
         method: "GET"
       }).then(function(response) {
-
           var cityName = response.name;
           var cityIconCode = response.weather[0].icon;
           var iconURL = "http://openweathermap.org/img/w/" + cityIconCode + ".png";
@@ -134,19 +129,18 @@ function nowWeather(searchedCity){
         $(userSearchIcon).attr("src", iconURL);
         $(userSearchDetails).append(cityTemp, cityHumidity, cityWind, cityUVIndex);
         
+        // create variables for UV index function
         var latitude = response.coord.lat;
         var longitude = response.coord.lon;
         currentUV(latitude, longitude);
-
       });
 }
 
+// posting UV information
 function currentUV(latitude, longitude){
-    
+    // creating new classes for html file
     $(".userSearchInfo").append($("<div class='box UVbox'></div>"));
-    
     $(".UVbox").append($('<div class="has-text-centered uvText"></div>'));
-    
     
     const cityUV = "http://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&units=imperial&appid=" + apiKey;
 
@@ -155,8 +149,9 @@ function currentUV(latitude, longitude){
         method: "GET"
       }).then(function(response) {
           var uvIndex = response.value;
-          $(".UVbox").text(uvIndex)
-        console.log("uv:",uvIndex)
+          $(".UVbox").text(uvIndex);
+
+        // color of UV box based on response return 
         if (uvIndex < 3){
             $(".UVbox").addClass("lowUV");
         } else if (uvIndex <= 5 && uvIndex >=3){
@@ -171,6 +166,7 @@ function currentUV(latitude, longitude){
     });
 }
 
+// 5 day forcast
 function forcast(searchedCity){
     const futureForcast = "http://api.openweathermap.org/data/2.5/forecast?q=" + searchedCity + "&units=imperial&appid=" + apiKey;
 
@@ -178,50 +174,38 @@ function forcast(searchedCity){
         url: futureForcast,
         method: "GET"
       }).then(function(response) {
-          var listLength = response.list;
-          
-        
-       
+        var listLength = response.list;
         var iconArr = [];
         var tempArr = [];
         var humidArr = [];
-      
+        
+        // create new html object and appending
         var forcastTitle = $('<h3 class="title is-3">').text("5 Day Forcast");
         $(".forcast-title").append(forcastTitle);
 
+        // at a secific time, chose a timeframe for each day to produce content for an icon, temp and humidity
         for(var i = 0; i < listLength.length; i+= 8){
-            console.log("forloop resonse:", listLength[i]);
             var futureIconID = listLength[i].weather[0].icon;
             var forcastIconURL = "http://openweathermap.org/img/w/" + futureIconID + ".png";
             var forestIcomDiv = $("<img>").attr("src", forcastIconURL);
             var futureTemp = $("<p>").text("Temp: " + Math.round(listLength[i].main.temp) + " °F");
             var futureHum = $("<p>").text("Humidity: " + listLength[i].main.humidity + "%");
 
-            
             iconArr.push(forestIcomDiv);
             tempArr.push(futureTemp);
             humidArr.push(futureHum);
-            console.log("temparr first: ", tempArr)
-
-
         }
 
+        // for teh desired amount of days(5) produce a html card element with a date
         for (var i=0 ; i < 5 ; i++){
-            
             var date = (moment().add([i+1] , 'days').format("MM/DD/YY"));
             var forcastDate = $("<p class= boldFont>").text(date);
-
-            
             var forcastColumn = $("<div>").addClass("column forcastColumn");
             var forcastCard = $("<div>").addClass("card rightColumn");
             $(forcastCard).append(forcastDate, iconArr[i], tempArr[i], humidArr[i]);
             $(forcastColumn).append(forcastCard);
             $(forcastContain).append(forcastColumn);
         }
-    
-          console.log("future:",response)
-        
-
     });
 }
 
