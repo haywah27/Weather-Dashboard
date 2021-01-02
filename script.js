@@ -24,7 +24,7 @@ function storageEmpty(){
     var cityHistory = JSON.parse(window.localStorage.getItem("city-name")) || [];
 
     if(!cityHistory.length){
-        
+
         nowWeather("Eugene")
     } else {
         lastSearchDisplay();
@@ -62,19 +62,31 @@ searchBtn.click(function(){
     nowWeather(searchedCity);
 });
 
+// capitalize each word from user input
+function cap(searchedCity){
+    var array1 = searchedCity.split(' ');
+    var capitalizeButton = [];
+      
+    for(var i = 0; i < array1.length; i++){
+      capitalizeButton.push(array1[i].charAt(0).toUpperCase()+array1[i].slice(1));
+    }
+    return capitalizeButton.join(' ');
+  }
 
+  
 // push new buttons with labels from user search
 function postCityButton(searchedCity){
-    var capitalizeButton = searchedCity.charAt(0).toUpperCase() + searchedCity.slice(1);    
-    var newButton = $("<button class='button is-fullwidth is-rounded cityButton'>").text(capitalizeButton);
+    var capsButton = cap(searchedCity);
+    
+    var newButton = $("<button class='button is-fullwidth is-rounded cityButton'>").text(capsButton);
     buttonList.push(newButton);
     
     // retrieving local storage array information
     var cityHistory = JSON.parse(window.localStorage.getItem("city-name")) || [];
 
     // if local storage has the city already, don't duplicate
-    if (cityHistory.indexOf(capitalizeButton) === -1){
-        cityHistory.push(capitalizeButton);
+    if (cityHistory.indexOf(capsButton) === -1){
+        cityHistory.push(capsButton);
         window.localStorage.setItem("city-name", JSON.stringify(cityHistory));
         $(buttonDump).append(newButton);
     }
