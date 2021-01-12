@@ -13,7 +13,7 @@ https://haywah27.github.io/Weather-Dashboard/
 <img src="./Assets/deployed-web.png" alt="deployed-website">
 
 ## Demo
-<img src="./Assets/Weather-dash.gif" alt="website-demo">
+<img src="./Assets/weather-demo.gif" alt="website-demo">
 
 ## Summary of Changes
 * Adding navbar and initial search box
