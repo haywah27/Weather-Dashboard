@@ -94,5 +94,11 @@
 background-color: #D4A579!important;
 }
 
+@media only screen and (max-width: 769px) {
+    .forcastColumn {
+        max-width: 100%!important;
+    }
+}
+
 
 
