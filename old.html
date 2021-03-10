@@ -24,9 +24,9 @@
     
     <!-- Search Bar Element-->
     <div class="container">
-        <div class="columns">
-            <div class="column is-one-quarter">
-                <div class="card leftColumn addBtn has-text-centered">
+        <div class="columns is-2">
+            <div class="column is-4">
+                <div class="card leftColumn addBtn">
                     <label class="label">Search for a City:</label>
                     <div class="field has-addons">
                         <div class="control">
@@ -44,10 +44,8 @@
                 </div>
             </div>
 
-
-            <div class="column is-three-quarters">
-                
-                
+            <!-- Searched City -->
+            <div class="column">
                 <div class="card rightColumn searchedCityColumn">
                     <div class="cityHeader">
                         <span class="userSearchCity title is-3"></span>
@@ -57,16 +55,12 @@
                     <div class="uvContainer"></div>
                 </div>
                 
-                <!-- five day forcast title -->
-                <div class="forcast-title"></div>
-
-                <div class="columns is-multiline forcastContainer"></div>
+                <!-- Five Day Forcast -->
+                <div class="column forcast-title"></div>
+                <div class="columns forcastContainer is-multiline"></div>      
             </div>
         </div>
-       
     </div>
-
-    <!-- modal pop up if invalid search -->
     <div class="modal">
         <div class="modal-background"></div>
         <div class="modal-content">

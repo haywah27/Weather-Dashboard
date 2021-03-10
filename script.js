@@ -70,7 +70,7 @@ function cap(searchedCity){
       capitalizeButton.push(array1[i].charAt(0).toUpperCase()+array1[i].slice(1));
     }
     return capitalizeButton.join(' ');
-  }
+}
 
   
 // push new buttons with labels from user search
