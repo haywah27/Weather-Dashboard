@@ -9,6 +9,12 @@ https://haywah27.github.io/Weather-Dashboard/
 > I WANT to see the weather outlook for multiple cities
 > SO THAT I can plan a trip accordingly
 
+## Deployed Website 
+<img src="./Assets/deployed-web.png" alt="deployed-website">
+
+## Demo
+<img src="./Assets/weather-demo.gif" alt="website-demo">
+
 ## Summary of Changes
 * Adding navbar and initial search box
 * Creating onClick event on search box button
@@ -31,6 +37,5 @@ https://haywah27.github.io/Weather-Dashboard/
 * Capitalizing multiple word city name
 * Removing constant city
 
-## Deployed Website 
-<img src="./Assets/deployed-web.png" alt="deployed-website">
+
 
